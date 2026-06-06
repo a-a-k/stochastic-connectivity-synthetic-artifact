@@ -1,0 +1,70 @@
+suite_id: smoke
+seed: 7
+mc_samples: 1000
+
+chain:
+  lengths: [1]
+  theta_values: [0.9]
+  rho_values: [0.8]
+
+fanout:
+  degrees: [1, 2]
+  theta: 0.9
+  rho: 0.8
+
+replicated_bottleneck:
+  replica_counts: [1, 2]
+  entry_theta: 1.0
+  target_theta: 0.9
+  rho: 0.82
+
+sensitivity:
+  theta_min: 0.5
+  theta_max: 0.9
+  theta_steps: 4
+  rho_min: 0.5
+  rho_max: 0.9
+  rho_steps: 4
+  base_replicas: 1
+  improved_replicas: 3
+
+async_side_effect:
+  theta: 0.97
+  rho_sync: 0.96
+  rho_async: 0.85
+
+failure_domain:
+  entry_theta: 1.0
+  replica_theta: 0.9
+  replica_count: 3
+  rho: 0.95
+
+timeout:
+  theta: 0.98
+  rho: 0.97
+  path_edges: 1
+  on_time_probabilities:
+    50ms: 0.55
+  retry_counts: [0, 1]
+
+trace_incompleteness:
+  degree: 3
+  theta: 0.97
+  rho: 0.95
+  replica_count: 2
+  omission_rates: [0.0, 0.2]
+
+scale_sanity:
+  enabled: true
+  mc_samples: 200
+  q_values: [0.995]
+  chain_lengths: [128]
+  fanout_degrees: [64]
+  bottleneck_replicas: [64]
+  bottleneck_entry_theta: 1.0
+  bottleneck_target_theta: 0.90
+  bottleneck_rho: 0.95
+  sentinel_mc:
+    - graph_family: chain
+      k_edges: 16
+      q: 0.995

@@ -1,0 +1,85 @@
+suite_id: stochastic_connectivity_synthetic
+seed: 20260605
+mc_samples: 200000
+confidence_level: 0.95
+mc_tolerance: 0.006
+
+chain:
+  lengths: [1, 2, 4, 8]
+  theta_values: [0.90, 0.95, 0.99]
+  rho_values: [0.90, 0.95, 0.99]
+
+fanout:
+  degrees: [1, 2, 4, 8, 12]
+  theta: 0.97
+  rho: 0.95
+
+replicated_bottleneck:
+  replica_counts: [1, 2, 3, 5, 8, 12]
+  entry_theta: 1.0
+  target_theta: 0.90
+  rho: 0.82
+
+sensitivity:
+  theta_min: 0.50
+  theta_max: 0.995
+  theta_steps: 60
+  rho_min: 0.50
+  rho_max: 0.995
+  rho_steps: 60
+  base_replicas: 1
+  improved_replicas: 3
+
+async_side_effect:
+  theta: 0.97
+  rho_sync: 0.96
+  rho_async: 0.85
+
+failure_domain:
+  entry_theta: 1.0
+  replica_theta: 0.90
+  replica_count: 3
+  rho: 0.95
+
+timeout:
+  theta: 0.98
+  rho: 0.97
+  path_edges: 2
+  on_time_probabilities:
+    50ms: 0.55
+    100ms: 0.78
+    200ms: 0.93
+  retry_counts: [0, 1, 2]
+
+trace_incompleteness:
+  degree: 5
+  theta: 0.97
+  rho: 0.95
+  replica_count: 3
+  omission_rates: [0.0, 0.10, 0.20, 0.40]
+
+scale_sanity:
+  enabled: true
+  mc_samples: 50000
+  q_values: [0.99, 0.995, 0.999]
+  chain_lengths: [16, 32, 64, 128, 256]
+  fanout_degrees: [16, 32, 64, 128]
+  bottleneck_replicas: [1, 2, 4, 8, 16, 32, 64]
+  bottleneck_entry_theta: 1.0
+  bottleneck_target_theta: 0.90
+  bottleneck_rho: 0.95
+  sentinel_mc:
+    - graph_family: chain
+      k_edges: 32
+      q: 0.99
+    - graph_family: chain
+      k_edges: 128
+      q: 0.995
+    - graph_family: fanout
+      degree: 64
+      q: 0.995
+    - graph_family: bottleneck
+      replicas: 64
+      entry_theta: 1.0
+      target_theta: 0.90
+      rho: 0.95
